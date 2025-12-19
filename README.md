@@ -1,4 +1,4 @@
-A repository storing a beamer template to build presentation based on the [OperaHPC](https://www.operahpc.eu/) Euratom project template.
+A repository storing a beamer template to build presentations based on the [OperaHPC](https://www.operahpc.eu/) Euratom project template.
 
 To generate a pdf presentation with [pandoc](https://pandoc.org/), one can use the provided example (file `example.md`) with the following command
 
