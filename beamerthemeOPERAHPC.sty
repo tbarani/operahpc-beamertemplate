@@ -1,0 +1,100 @@
+\mode<presentation>
+
+% Requirement
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{xparse}
+\RequirePackage{enumerate}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,math,calc}
+
+\RequirePackage[absolute,showboxes,overlay]{textpos}
+\TPshowboxesfalse
+
+% Settings
+\useinnertheme{OPERAHPC}
+\useoutertheme{OPERAHPC}
+\usecolortheme{OPERAHPC}
+
+% emulate the set method
+\newcommand{\setvalue}[2]{
+  \global\edef#1{#2}
+}
+
+% CEA logo on titlepage
+\titlegraphic{logos/LOGO_CEA_ORIGINAL.png}
+\setvalue{\BottomLogo}{logos/LOGO_CEA_ORIGINAL.png}
+
+%% png file that might change with colour
+\setvalue{\transBkgColour}{ceawhite}
+\setvalue{\operalogo}{logos/OPERA_logo.png}
+
+\setvalue{\ThxMessage}{Thank you for your attention}  % default value
+% logo for second affiliation or second author
+\setvalue{\secondlogo}{}  % this applies to all pages but titlepage
+\setvalue{\eulogo}{logos/EU_logo.png}  % EU logo for title page
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+\setbeamerfont{title}{size=\LARGE}
+\setbeamerfont{frametitle}{size=\Large}
+\setbeamerfont{framesubtitle}{series=\normalfont}
+\setbeamerfont{subtitle}{shape=\itshape, size=\footnotesize}
+\setbeamerfont{subframetitle}{size=\small}
+\setbeamerfont{section title}{series=\mdseries, size=\LARGE}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{author}{series=\mdseries, size=\normalsize}
+\setbeamerfont{institute}{size=\footnotesize}
+\setbeamerfont{author in head/foot}{size={\fontsize{7pt}{8}\selectfont}}
+\setbeamerfont{enumerate items}{series=\bfseries}
+\setbeamerfont{thanksmessage}{size=\LARGE}
+\setbeamerfont{motto}{size={\fontsize{5pt}{6}\selectfont}}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{eufunding}{size=\scriptsize}
+\setbeamerfont{disclaimer}{size={\fontsize{6pt}{7}\selectfont}}
+
+% add numbers to float elements like figures and tables
+\setbeamertemplate{caption}[numbered]
+\newcommand{\myat}{{\fontfamily{ptm}\selectfont @}}
+
+\setbeamertemplate{title page}[OPERAHPC-OPERA]
+
+\BeforeBeginEnvironment{frame}{%
+  \setbeamertemplate{frametitle}[leftcorner]
+  \setbeamertemplate{footline}[OPERAHPC]
+  \setbeamertemplate{background}[empty]
+}
+
+\define@key{beamerframe}{transition}[true]{%
+  \setbeamertemplate{frametitle}[empty]%
+  \setbeamertemplate{background}[transition]%
+  \setbeamertemplate{footline}{}%
+}
+
+\AtBeginSection{
+  \begin{frame}[transition]
+  \end{frame}
+}
+
+
+\define@key{beamerframe}{decorated}[false]{%
+  \setbeamertemplate{frametitle}[empty]
+  \setbeamertemplate{background}[decorated]
+  \setbeamertemplate{footline}{}
+}
+
+\define@key{beamerframe}{closing}[false]{%
+  \setbeamertemplate{frametitle}[empty]
+  \setbeamertemplate{background}[closing]
+  \setbeamertemplate{footline}{}
+}
+
+\define@key{beamerframe}{operatitle}[false]{%
+  \setbeamertemplate{frametitle}[empty]%
+  \setbeamertemplate{background}[operahpc-title]%
+  \setbeamertemplate{footline}{}%
+}
+
+\mode<all>

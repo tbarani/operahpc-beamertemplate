@@ -1,0 +1,189 @@
+\mode<presentation>
+
+\newlength\bannerheight
+\newlength\logowidthTitlePage
+\newlength\logoheightTitlePage
+\newlength\logoxposLastPage
+\newlength\logoyposLastPage
+\newlength\logoxposTitlePage
+\newlength\logoyposTitlePage
+\newlength\logpxposTitlePage
+\newlength\logpyposTitlePage
+\newlength\yposFrameTitle
+\newlength\xposFrameTitle
+\newlength\logowidthFrameTitle
+\newlength\logobgwidthFrameTitle
+\newlength\mottoxposTitlePage
+\newlength\mottoyposTitlePage
+\newlength\footlineheight
+\newdimen\imageheight
+
+\pgfmathsetlength{\bannerheight}{0.15*\paperheight*1pt}
+\pgfmathsetlength{\logowidthTitlePage}{0.15*\paperwidth*1pt}
+\pgfmathsetlength{\logoheightTitlePage}{0.20*\paperheight*1pt}
+\pgfmathsetlength{\logoxposTitlePage}{0.06*\paperwidth*1pt}
+\pgfmathsetlength{\logpxposTitlePage}{0.82*\paperwidth*1pt}
+\pgfmathsetlength{\logoyposTitlePage}{0.08*\paperheight*1pt}
+\pgfmathsetlength{\logpyposTitlePage}{\logoyposTitlePage}
+\pgfmathsetlength{\logoxposLastPage}{0.175*\paperwidth*1pt}
+\pgfmathsetlength{\logoyposLastPage}{\logoyposTitlePage}
+\pgfmathsetlength{\yposFrameTitle}{\paperheight-\bannerheight}
+\pgfmathsetlength{\xposFrameTitle}{0.05*\paperwidth*1pt}
+\pgfmathsetlength{\logowidthFrameTitle}{0.1*\paperwidth*1pt}
+\pgfmathsetlength{\logobgwidthFrameTitle}{0.106*\paperwidth*1pt}
+\pgfmathsetlength{\mottoxposTitlePage}{0.06*\paperwidth*1pt}
+\pgfmathsetlength{\mottoyposTitlePage}{0.40*\paperheight*1pt}
+\pgfmathsetlength{\footlineheight}{0.035*\paperheight*1pt}
+
+% define background for the last page
+
+\defbeamertemplate{background}{empty}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+  \end{tikzpicture}
+}
+
+% exploit the background template to set the titlepage background
+\defbeamertemplate{background}{decorated}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+
+    % Blue header bar
+    \fill[operablue] (0,0.85\paperheight) rectangle (\paperwidth,\paperheight);
+    
+    % EU logo in top left of blue bar
+    \node[anchor=north west,inner sep=0pt] at (0.03\paperwidth,0.98\paperheight)
+      {\includegraphics[height=0.10\paperheight]{\eulogo}};
+    
+    % EU funding text in blue bar
+    \node[anchor=north west,text width=0.3\paperwidth] at (0.03\paperwidth,0.87\paperheight)
+      {\usebeamerfont{eufunding}\usebeamercolor[fg]{title}Funded by the European Union};
+
+    % add CEA logo at bottom
+    \node[anchor=south west,inner sep=0pt] (logo) at
+	  (\logoxposTitlePage,\logoyposTitlePage)
+      {\includegraphics[height=\logoheightTitlePage]{\inserttitlegraphic}};
+	\ifthenelse{\equal{\secondlogo}{}}{}{%
+	  \node[anchor=south east,inner sep=0pt] (logp) at
+	    (\logpxposTitlePage,\logpyposTitlePage)
+        {\includegraphics[height=\logoheightTitlePage]{\secondlogo}};
+	}%
+
+  \end{tikzpicture}
+}
+
+% Closing slide background
+\defbeamertemplate{background}{closing}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+    
+    % Blue background
+    \fill[operablue] (0.25\paperwidth,0) rectangle (\paperwidth,\paperheight);
+    
+    % OperaHPC logo top-left
+    \node[anchor=north west,inner sep=0pt] at (0.03\paperwidth,0.97\paperheight)
+      {\includegraphics[width=0.2\paperwidth]{\operalogo}};
+    
+    % EU logo bottom-left
+    \node[anchor=south west,inner sep=0pt] at (0.05\paperwidth,0.04\paperheight)
+      {\includegraphics[height=0.2\paperheight]{\eulogo}};
+    
+    % Thank you message (centered, white text)
+    \node[text=white,align=center] at (0.65\paperwidth,0.55\paperheight)
+      {\usebeamerfont{thanksmessage}Thank you for your attention};
+    
+    % Disclaimer text (bottom center-right, white text)
+    \node[text=white,text width=0.55\paperwidth,align=left] at (0.6\paperwidth,0.15\paperheight)
+  {\begingroup
+     \scriptsize
+     \setlength{\baselineskip}{0.7\baselineskip}% tighten lines
+     \usebeamerfont{disclaimer}%
+     OperaHPC is funded by the European Union. Views and opinions expressed, however, are those of the author(s) only and do not necessarily reflect those of the European Union or European Commission. Neither the European Union nor the granting authority can be held responsible for them.
+   \endgroup};
+  \end{tikzpicture}
+}
+
+\defbeamertemplate{background}{transition}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+
+    % Blue background on the right
+    \fill[operablue] (0.25\paperwidth,0) rectangle (\paperwidth,\paperheight);
+
+    % OperaHPC logo top-left
+    \node[anchor=north west,inner sep=0pt] at (0.03\paperwidth,0.97\paperheight)
+      {\includegraphics[width=0.2\paperwidth]{\operalogo}};
+
+    % Section title in the blue area
+    \node[text=white,align=center,text width=0.65\paperwidth] at (0.65\paperwidth,0.55\paperheight)
+      {\usebeamerfont{section title}\insertsection};
+  \end{tikzpicture}
+}
+
+% Title page
+\defbeamertemplate*{title page}{OPERAHPC}[1][]
+{
+   \vskip\mottoyposTitlePage%
+   \vskip1em
+   \begin{beamercolorbox}[wd=0.88\paperwidth,sep=8pt,leftskip=\mottoxposTitlePage,#1]{title page header}
+     \usebeamerfont{title}\inserttitle\par%
+   \end{beamercolorbox}
+   \vskip15pt%
+   \begin{beamercolorbox}[wd=\paperwidth,sep=0pt,leftskip=\mottoxposTitlePage,#1]{date}
+     \usebeamerfont{date}\insertdate\par%
+   \end{beamercolorbox}
+   \vskip5pt%
+   \begin{beamercolorbox}[wd=\paperwidth,sep=0pt,leftskip=\mottoxposTitlePage,#1]{author}
+     \usebeamerfont{institute}\insertauthor\par%
+   \end{beamercolorbox}
+   \vfill
+}
+
+% --- OPERA title page background without top header bar ---
+\defbeamertemplate{background}{operahpc-title}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+
+    % OperaHPC logo top-left
+    \node[anchor=north west,inner sep=0pt] at (0.03\paperwidth,0.97\paperheight)
+      {\includegraphics[width=0.25\paperwidth]{\operalogo}};
+
+    % CEA logo bottom-left (uses \inserttitlegraphic as in existing theme)
+    \node[anchor=south west,inner sep=0pt] at
+      (0.05\paperwidth,0.025\paperheight)
+      {\includegraphics[height=0.12\paperheight, keepaspectratio]{\inserttitlegraphic}};
+
+    % EU logo + funding text bottom-right
+    \node[anchor=south east,inner sep=0pt] at (0.965\paperwidth,0.025\paperheight)
+      {\includegraphics[height=0.12\paperheight, keepaspectratio]{\eulogo}};
+    \node[anchor=south east,text width=0.45\paperwidth,align=right] at (0.86\paperwidth,0.05\paperheight)
+      {\usebeamerfont{eufunding}\usebeamercolor[operablue]{eufunding}Funded by the European Union};
+  \end{tikzpicture}
+}
+
+\defbeamertemplate*{title page}{OPERAHPC-OPERA}[1][]{
+  \vskip0.20\paperheight%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.50\paperheight,
+    sep=20pt,center,#1]{title page header}
+    \vfill
+    {\usebeamerfont{title}\inserttitle\par}
+    \vskip0.08\paperheight
+    {\usebeamercolor[fg]{title}\usebeamerfont{author}\insertauthor\par}
+    \vskip0.01\paperheight%
+    {\usebeamercolor[fg]{title}\usebeamerfont{eufunding}\insertinstitute\par}
+    \vskip0.03\paperheight%
+    {\usebeamercolor[fg]{title}\usebeamerfont{date}\raggedright\hspace{0.03\paperwidth}\insertdate\par}
+    
+    %{\usebeamercolor[fg]{title}\usebeamerfont{eufunding}\insertinstitute}
+    %\vskip0.18\paperheight
+    \vfill
+  \end{beamercolorbox}
+}
+
+
+\setbeamertemplate{itemize item}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+\setbeamertemplate{enumerate items}[square]
+
+\mode<all>

@@ -1,0 +1,81 @@
+\mode<presentation>
+
+\defbeamertemplate*{frametitle}{leftcorner}{
+  \vskip-1pt%
+  
+  \begin{beamercolorbox}[wd=\paperwidth,ht=\bannerheight]{frametitle}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,\bannerheight);
+      
+      
+      \node[anchor=north west,inner sep=0pt] at (0.01\paperwidth,0.95\bannerheight)
+        {\includegraphics[width=0.15\paperwidth]{\operalogo}};
+      
+      
+\ifx\insertframesubtitle\@empty%
+  {%
+    \node[anchor=west,text=operablue] at (0.18\paperwidth,0.4\bannerheight)
+      {\usebeamerfont{frametitle}%
+       \begin{minipage}[t]{0.72\paperwidth}% adjust width as needed
+         \raggedleft\insertframetitle\par
+       \end{minipage}};%
+  }%
+\else%
+  {%
+    \node[anchor=west,text=operablue] at (0.18\paperwidth,0.65\bannerheight)
+      {\usebeamerfont{frametitle}%
+       \begin{minipage}[t]{0.72\paperwidth}
+         \raggedleft\insertframetitle\par
+       \end{minipage}};%
+    \node[anchor=west,text=operablue] at (0.18\paperwidth,0.25\bannerheight)
+      {\usebeamerfont{subframetitle}%
+       \begin{minipage}[t]{0.72\paperwidth}
+         \raggedleft\insertframesubtitle\par
+       \end{minipage}};%
+  }%
+\fi
+      
+      \draw[line width=0.5pt,operablue] (0.18\paperwidth,0.1cm) -- (\paperwidth,0.1cm);
+    \end{tikzpicture}
+  \end{beamercolorbox}
+  
+  \vskip-10pt%
+}
+
+\defbeamertemplate{frametitle}{empty}{
+  \vskip-1pt%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=\bannerheight]{frametitle}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,\bannerheight);
+
+      \ifx\insertframesubtitle\@empty%
+        {\node[anchor=west] at (\xposFrameTitle,{0.4\bannerheight}){\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par};}%
+      \else%
+        {\node[anchor=west] at (\xposFrameTitle,{0.65\bannerheight}){\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par};%
+         \node[anchor=west] at (\xposFrameTitle,{0.25\bannerheight}){\usebeamerfont{subframetitle}\usebeamercolor[fg]{subframetitle}\insertframesubtitle\par};%
+        }%
+        \fi%
+        
+    \end{tikzpicture}
+  \end{beamercolorbox}
+  \vskip-10pt%
+}
+
+\defbeamertemplate*{footline}{OPERAHPC}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,\footlineheight);
+    
+    % Draw operablue background rectangle
+    \fill[operablue] (0,0) rectangle (\paperwidth,2\footlineheight);
+    
+    % Left side: subtitle text
+    \node[anchor=west,text=white] at (0.5\paperwidth,\footlineheight)
+      {\usebeamerfont{author in head/foot}\insertdate};
+    
+    % Right side: page number
+    \node[anchor=east,text=white] at (0.98\paperwidth,\footlineheight)
+      {\usebeamerfont{author in head/foot}\insertframenumber};
+  \end{tikzpicture}
+}
+
+\mode<all>
